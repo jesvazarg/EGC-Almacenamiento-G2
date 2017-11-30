@@ -17,8 +17,11 @@ class ComprobarVoto(Resource):
 
         votes = comprobar_voto(db, usuario_id)
 
-        desconectar_db(db)
-        return votes
+        if not votes:
+            abort(404, message="El usuario no ha realizado ningún voto.")
+        else:
+            desconectar_db(db)
+            return votes
 
 
 class ObtenerVotos(Resource):
