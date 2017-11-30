@@ -1,0 +1,30 @@
+Manual de instalacion:
+
+1. Instalar el pyCharm
+
+2. Instalar python y git:
+	sudo apt-get install python (jesus lo puso asi sin especificar la version y le instalo la version 2.7.11)
+	sudo apt-get install git (si no funciona git, probad con git-all)
+
+3. Instalar el MySQL server:
+	desde la pagina https://dev.mysql.com/downloads/mysql/ instalar la version correspondiente, descomprimirla e instalarla (pedira la contraseña para el root, que va a ser root que es la que yo he puesto en la conexion a la bd)
+	Una vez se haya instalado creamos la bd desde terminal: abrimos terminal y ponemos "sudo su", a continuacion ponemos "mysql -uroot -proot".
+	Creamos la base de datos: "create database almacenamiento" (tiene que llamarse almacenamiento porque es el nombre que yo le he puesto XD)
+	Cogemos el script de creacion de la tabla y copiamos el contenido en terminal.
+
+4. Vamos a instalar las librerias necesarias, asi que si no tenemos "pip" instalado lo instalamos:
+	sudo apt-get install python-pip python-dev build-essential
+	sudo pip install --upgrade pip
+	sudo pip install --upgrade virtualenv
+
+5. Instalamos las librerias necesarias que son:
+	Flask:
+		sudo pip install Flask
+	flask_restful:
+		sudo pip install flask-restful
+	MySQLdb:
+		sudo apt-get install python-mysqldb
+
+6. Para comprobar el funcionamiento de la api se puede usar:
+	- postman: https://blog.bluematador.com/posts/postman-how-to-install-on-ubuntu-1604/?utm_source=hootsuite&utm_medium=twitter&utm_campaign= (esa es la pagina que he encontrado para la instalacion)
+	- RESTClient: https://addons.mozilla.org/es/firefox/addon/restclient/ (es una extension del firefox)
