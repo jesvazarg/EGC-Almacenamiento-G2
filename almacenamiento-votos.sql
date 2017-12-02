@@ -58,15 +58,17 @@ INSERT INTO `votos` (`voto_id`, `usuario_id`, `votacion_id`, `pregunta_id`, `res
 --
 
 --
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+ALTER TABLE `votos` CHANGE `voto_id` `voto_id` int(11) AUTO_INCREMENT;
+
+--
 -- Indices de la tabla `votos`
 --
 ALTER TABLE `votos`
   ADD PRIMARY KEY (`voto_id`),
   ADD UNIQUE KEY `usuario_id, votacion_id, pregunta_id` (`usuario_id`,`votacion_id`,`pregunta_id`) USING BTREE;
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
 
 --
 -- AUTO_INCREMENT de la tabla `votos`
