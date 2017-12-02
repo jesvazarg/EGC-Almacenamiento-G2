@@ -12,10 +12,10 @@ api = Api(app)
 
 
 class ComprobarVoto(Resource):
-    def get(self, usuario_id):
+    def get(self, usuario_id, votacion_id):
         db = conectar_db()
 
-        votes = comprobar_voto(db, usuario_id)
+        votes = comprobar_voto(db, usuario_id, votacion_id)
 
         if not votes:
             abort(404, message="El usuario no ha realizado ningún voto.")
@@ -25,12 +25,12 @@ class ComprobarVoto(Resource):
 
 
 class ObtenerVotos(Resource):
-    def get(self, token, pregunta_id):
+    def get(self, token, pregunta_id, votacion_id):
         db = conectar_db()
 
         # TODO: Aqui hacemos las comprobaciones del token
 
-        votes = consultar_votos_pregunta(db, pregunta_id)
+        votes = consultar_votos_pregunta(db, pregunta_id, votacion_id)
 
         desconectar_db(db)
 
@@ -43,6 +43,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('usuario_id')
 parser.add_argument('pregunta_id')
 parser.add_argument('respuesta_id')
+parser.add_argument('votacion_id')
 
 
 class AlmacenarVoto(Resource):
@@ -51,7 +52,7 @@ class AlmacenarVoto(Resource):
         try:
             db = conectar_db()
 
-            almacenar_voto(db, args['usuario_id'], args['pregunta_id'], args['respuesta_id'])
+            almacenar_voto(db, args['usuario_id'], args['pregunta_id'], args['respuesta_id'], args['votacion_id'])
 
             desconectar_db(db)
         except IntegrityError:
@@ -61,8 +62,8 @@ class AlmacenarVoto(Resource):
 
 # URLs api
 
-api.add_resource(ComprobarVoto, "/get/comprobar_voto/<int:usuario_id>")
-api.add_resource(ObtenerVotos, "/get/obtener_votos/<int:token>/<int:pregunta_id>")
+api.add_resource(ComprobarVoto, "/get/comprobar_voto/<int:usuario_id>/<int:votacion_id>")
+api.add_resource(ObtenerVotos, "/get/obtener_votos/<int:token>/<int:pregunta_id>/<int:votacion_id>")
 api.add_resource(AlmacenarVoto, "/post/almacenar_voto")
 
 if __name__ == '__main__':

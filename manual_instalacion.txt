@@ -18,11 +18,11 @@ Manual de instalacion:
 	sudo pip install --upgrade virtualenv
 
 5. Instalamos las librerias necesarias que son:
-	Flask:
+	Flask version 0.12.2:
 		sudo pip install Flask
-	flask_restful:
+	flask_restful version 0.3.6:
 		sudo pip install flask-restful
-	MySQLdb:
+	MySQLdb version 1.2.5:
 		sudo apt-get install python-mysqldb
 
 6. Para comprobar el funcionamiento de la api se puede usar:

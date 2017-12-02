@@ -6,7 +6,7 @@ import MySQLdb
 def conectar_db():
     db = MySQLdb.connect(host="127.0.0.1",    # your host, usually localhost
                      user="root",         # your username
-                     passwd="011235",  # your password
+                     passwd="root",  # your password
                      db="almacenamiento")        # name of the data base
     return db
 
@@ -17,11 +17,12 @@ def desconectar_db(db):
 # Consulta
 
 
-def comprobar_voto(db, user_id):
+def comprobar_voto(db, usuario_id, votacion_id):
     cursor = db.cursor()
     result = []
 
-    cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s", {'usuario_id': user_id})
+    cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s and votacion_id=%(votacion_id)s",
+                   {'usuario_id': usuario_id, 'votacion_id': votacion_id})
 
     for row in cursor.fetchall():
         result.append({
@@ -29,16 +30,18 @@ def comprobar_voto(db, user_id):
             "usuario_id": row[1],
             "pregunta_id": row[2],
             "respuesta_id": row[3],
+            "votacion_id": row[4],
         })
 
     return result
 
 
-def consultar_votos_pregunta(db, question_id):
+def consultar_votos_pregunta(db, pregunta_id, votacion_id):
     cursor = db.cursor()
     result = []
 
-    cursor.execute("SELECT * FROM votos WHERE pregunta_id=%(question_id)s", {'question_id': question_id})
+    cursor.execute("SELECT * FROM votos WHERE pregunta_id=%(question_id)s and pregunta_id=%(question_id)s",
+                   {'question_id': pregunta_id, 'votacion_id': votacion_id})
 
     for row in cursor.fetchall():
         result.append({
@@ -46,6 +49,7 @@ def consultar_votos_pregunta(db, question_id):
             "usuario_id": row[1],
             "pregunta_id": row[2],
             "respuesta_id": row[3],
+            "votacion_id": row[4],
         })
 
     return result
@@ -53,12 +57,12 @@ def consultar_votos_pregunta(db, question_id):
 # Inserción
 
 
-def almacenar_voto(db, user_id, question_id, answer_id):
+def almacenar_voto(db, usuario_id, pregunta_id, respuesta_id, votacion_id):
     cursor = db.cursor()
     result = []
 
-    add_vote = ("INSERT INTO votos (usuario_id, pregunta_id, respuesta_id) VALUES (%s, %s, %s)")
-    data_vote1 = (user_id, question_id, answer_id)
+    add_vote = "INSERT INTO votos (usuario_id, pregunta_id, respuesta_id, votacion_id) VALUES (%s, %s, %s, %s)"
+    data_vote1 = (usuario_id, pregunta_id, respuesta_id, votacion_id)
     cursor.execute(add_vote, data_vote1)
 
     db.commit()
@@ -74,15 +78,15 @@ def primera_insercion():
     #  you execute all the queries you need
     cur = db.cursor()
 
-    add_vote = ("INSERT INTO votos (usuario_id, pregunta_id, respuesta_id) VALUES (%s, %s, %s)")
-    data_vote1 = (1, 1, 1)
-    data_vote2 = (1, 2, 2)
-    data_vote3 = (2, 1, 2)
-    data_vote4 = (2, 2, 2)
-    data_vote5 = (3, 1, 2)
-    data_vote6 = (3, 2, 1)
-    data_vote7 = (4, 1, None)
-    data_vote8 = (5, 2, None)
+    add_vote = "INSERT INTO votos (usuario_id, pregunta_id, respuesta_id, votacion_id) VALUES (%s, %s, %s, %s)"
+    data_vote1 = (1, 1, 1, 1)
+    data_vote2 = (1, 2, 2, 1)
+    data_vote3 = (2, 1, 2, 1)
+    data_vote4 = (2, 2, 2, 1)
+    data_vote5 = (3, 1, 2, 1)
+    data_vote6 = (3, 2, 1, 1)
+    data_vote7 = (4, 1, None, 1)
+    data_vote8 = (5, 2, None, 1)
 
     # Insert new employee
     cur.execute(add_vote, data_vote1)
