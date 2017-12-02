@@ -6,7 +6,7 @@ Manual de instalacion:
 	sudo apt-get install python (jesus lo puso asi sin especificar la version y le instalo la version 2.7.11)
 	sudo apt-get install git (si no funciona git, probad con git-all)
 
-3. Instalar el MySQL server:
+3. Instalar MySQL Community Server 5.7.19:
 	desde la pagina https://dev.mysql.com/downloads/mysql/ instalar la version correspondiente, descomprimirla e instalarla (pedira la contraseña para el root, que va a ser root que es la que yo he puesto en la conexion a la bd)
 	Una vez se haya instalado creamos la bd desde terminal: abrimos terminal y ponemos "sudo su", a continuacion ponemos "mysql -uroot -proot".
 	Creamos la base de datos: "create database almacenamiento" (tiene que llamarse almacenamiento porque es el nombre que yo le he puesto XD)
