@@ -26,9 +26,11 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `votos`
 --
 
-CREATE TABLE IF NOT EXISTS `votos` (
+DROP TABLE IF EXISTS `votos`;
+CREATE TABLE `votos` (
   `voto_id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
+  `votacion_id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL,
   `respuesta_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
@@ -37,19 +39,19 @@ CREATE TABLE IF NOT EXISTS `votos` (
 -- Volcado de datos para la tabla `votos`
 --
 
-INSERT INTO `votos` (`voto_id`, `usuario_id`, `pregunta_id`, `respuesta_id`) VALUES
-(13, 1, 1, 1),
-(14, 1, 2, 2),
-(15, 2, 1, 2),
-(16, 2, 2, 2),
-(17, 3, 1, 2),
-(18, 3, 2, 1),
-(19, 4, 1, NULL),
-(20, 5, 2, NULL),
-(23, 13, 1, 1),
-(30, 13, 2, 1),
-(31, 14, 2, 1),
-(32, 15, 2, 1);
+INSERT INTO `votos` (`voto_id`, `usuario_id`, `votacion_id`, `pregunta_id`, `respuesta_id`) VALUES
+(13, 1, 1, 1, 1),
+(14, 1, 1, 2, 2),
+(15, 2, 1, 1, 2),
+(16, 2, 1, 2, 2),
+(17, 3, 1, 1, 2),
+(18, 3, 1, 2, 1),
+(19, 4, 1, 1, NULL),
+(20, 5, 1, 2, NULL),
+(23, 13, 2, 1, 1),
+(30, 13, 2, 2, 1),
+(31, 14, 2, 2, 1),
+(32, 15, 2, 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -60,7 +62,7 @@ INSERT INTO `votos` (`voto_id`, `usuario_id`, `pregunta_id`, `respuesta_id`) VAL
 --
 ALTER TABLE `votos`
   ADD PRIMARY KEY (`voto_id`),
-  ADD UNIQUE KEY `usuario_id, pregunta_id` (`usuario_id`,`pregunta_id`) USING BTREE;
+  ADD UNIQUE KEY `usuario_id, votacion_id, pregunta_id` (`usuario_id`,`votacion_id`,`pregunta_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
