@@ -28,18 +28,18 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `votos`;
 CREATE TABLE `votos` (
-  `voto_id` int(11) NOT NULL,
-  `usuario_id` char(11) NOT NULL,
-  `votacion_id` char(11) NOT NULL,
-  `pregunta_id` char(11) NOT NULL,
-  `respuesta` char(11) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `token_usuario` char(11) NOT NULL,
+  `token_votacion` char(11) NOT NULL,
+  `token_pregunta` char(11) NOT NULL,
+  `token_respuesta` char(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `votos`
 --
 
-INSERT INTO `votos` (`voto_id`, `usuario_id`, `votacion_id`, `pregunta_id`, `respuesta`) VALUES
+INSERT INTO `votos` (`id`, `token_usuario`, `token_votacion`, `token_pregunta`, `token_respuesta`) VALUES
 (13, '1', '1', '1', '1'),
 (14, '1', '1', '2', '2'),
 (15, '2', '1', '1', '2'),
@@ -63,20 +63,20 @@ INSERT INTO `votos` (`voto_id`, `usuario_id`, `votacion_id`, `pregunta_id`, `res
 -- Indices de la tabla `votos`
 --
 ALTER TABLE `votos`
-  ADD PRIMARY KEY (`voto_id`),
-  ADD UNIQUE KEY `usuario_id, votacion_id, pregunta_id` (`usuario_id`,`votacion_id`,`pregunta_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token_usuario, token_votacion, token_pregunta` (`token_usuario`,`token_votaciontoken_`,`token_pregunta`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
-ALTER TABLE `votos` CHANGE `voto_id` `voto_id` int(11) AUTO_INCREMENT;
+ALTER TABLE `votos` CHANGE `id` `id` int(11) AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `votos`
 --
 ALTER TABLE `votos`
-  MODIFY `voto_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 
 --
 -- Estructura de tabla para la tabla `tokens`
@@ -84,7 +84,7 @@ ALTER TABLE `votos`
 
 DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE `tokens` (
-  `token_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `token` char(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
@@ -92,7 +92,7 @@ CREATE TABLE `tokens` (
 -- Volcado de datos para la tabla `tokens`
 --
 
-INSERT INTO `tokens` (`token_id`, `token`) VALUES
+INSERT INTO `tokens` (`id`, `token`) VALUES
 (1, 'QWERTY12345'),
 (2, '12345QWERTY'),
 (3, 'ASDFGH67890');
@@ -107,20 +107,20 @@ INSERT INTO `tokens` (`token_id`, `token`) VALUES
 -- Indices de la tabla `tokens`
 --
 ALTER TABLE `tokens`
-  ADD PRIMARY KEY (`token_id`),
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE (`token`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
-ALTER TABLE `tokens` CHANGE `token_id` `token_id` int(11) AUTO_INCREMENT;
+ALTER TABLE `tokens` CHANGE `id` `id` int(11) AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
