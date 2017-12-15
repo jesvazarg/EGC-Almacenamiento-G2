@@ -12,6 +12,12 @@ Manual de instalacion:
 	Creamos la base de datos: "create database almacenamiento" (tiene que llamarse almacenamiento porque es el nombre que yo le he puesto XD)
 	Cogemos el script de creacion de la tabla y copiamos el contenido en terminal.
 
+	** Nota: Los comandos para ver si mysql esta activo y activarlo o desactivarlo son:
+        service mysqld status
+        service mysqld stop
+        service mysqld start
+    ** Nota2: Si no se puede conectar la api seguir los pasos de la pagina: http://www.zyxware.com/articles/5539/solved-cant-connect-to-local-mysql-server-through-socket-var-run-mysqld-mysqld-sock
+
 4. Vamos a instalar las librerias necesarias, asi que si no tenemos "pip" instalado lo instalamos:
 	sudo apt-get install python-pip python-dev build-essential
 	sudo pip install --upgrade pip
@@ -28,3 +34,4 @@ Manual de instalacion:
 6. Para comprobar el funcionamiento de la api se puede usar:
 	- postman: https://blog.bluematador.com/posts/postman-how-to-install-on-ubuntu-1604/?utm_source=hootsuite&utm_medium=twitter&utm_campaign= (esa es la pagina que he encontrado para la instalacion)
 	- RESTClient: https://addons.mozilla.org/es/firefox/addon/restclient/ (es una extension del firefox)
+
