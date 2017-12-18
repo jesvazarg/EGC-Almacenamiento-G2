@@ -1,6 +1,7 @@
 #encoding: UTF-8
-from flask import Flask, request, render_template, json
-from flask_restful import Resource, Api, reqparse, abort
+
+from flask import Flask, json
+from flask_restful import Api, reqparse
 from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
 
 from database import *
@@ -39,8 +40,8 @@ def handle_unauthorized(error=None):
 def comprobar_voto(token_bd, token_usuario, token_votacion):
     db = conectar_db()
 
-
-    # TODO: comprobar el token
+    if not comprobar_token(db, token_bd):
+        return handle_not_found('Token incorrecto.')
 
     votes = get_voto(db, token_usuario, token_votacion)
 
@@ -58,7 +59,8 @@ def comprobar_voto(token_bd, token_usuario, token_votacion):
 def comprobar_voto_pregunta(token_bd, token_usuario, token_votacion, token_pregunta):
     db = conectar_db()
 
-    # TODO: comprobar el token
+    if not comprobar_token(db, token_bd):
+        return handle_not_found('Token incorrecto.')
 
     votes = get_voto_pregunta(db, token_usuario, token_votacion, token_pregunta)
 
@@ -76,7 +78,8 @@ def comprobar_voto_pregunta(token_bd, token_usuario, token_votacion, token_pregu
 def obtener_votos(token_bd, token_votacion, token_pregunta):
     db = conectar_db()
 
-    # TODO: Aqui hacemos las comprobaciones del token
+    if not comprobar_token(db, token_bd):
+        return handle_not_found('Token incorrecto.')
 
     votes = consultar_votos_pregunta(db, token_pregunta, token_votacion)
 
@@ -105,17 +108,18 @@ def almacenar_voto():
     pregunta_id = args['token_pregunta']
     respuesta_id = args['token_respuesta']
 
-    # TODO: comprobar el token
+    db = conectar_db()
+
+    if not comprobar_token(db, token_bd):
+        return handle_not_found('Token incorrecto.')
 
     try:
-        db = conectar_db()
-
         guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
-
-        desconectar_db(db)
     except IntegrityError:
+        desconectar_db(db)
         return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
     else:
+        desconectar_db(db)
         return {"message": "El voto se ha almacenado satisfactoriamente."}
 
 
