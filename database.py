@@ -16,13 +16,28 @@ def desconectar_db(db):
 
 # Consulta
 
+def comprobar_token(db,token):
+    cursor = db.cursor()
 
+    cursor.execute("SELECT token FROM tokens WHERE token=%(token)s",
+                   {'token': token})
+
+    valido = True
+    if not cursor.fetchall():
+        valido = False
+
+    return valido
+
+<<<<<<< HEAD
 def get_voto(db, usuario_id, votacion_id):
+=======
+def comprobar_voto(db, token_usuario, token_votacion):
+>>>>>>> f801a71bfd784fad55ab801ffef9e4e2105fcd99
     cursor = db.cursor()
     result = []
 
-    cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s and votacion_id=%(votacion_id)s",
-                   {'usuario_id': usuario_id, 'votacion_id': votacion_id})
+    cursor.execute("SELECT * FROM votos WHERE token_usuario=%(token_usuario)s and token_votacion=%(token_votacion)s",
+                   {'token_usuario': token_usuario, 'token_votacion': token_votacion})
 
     for row in cursor.fetchall():
         result.append({
@@ -36,12 +51,16 @@ def get_voto(db, usuario_id, votacion_id):
     return result
 
 
+<<<<<<< HEAD
 def get_voto_pregunta(db, usuario_id, votacion_id, pregunta_id):
+=======
+def comprobar_voto_pregunta(db, token_usuario, token_votacion, token_pregunta):
+>>>>>>> f801a71bfd784fad55ab801ffef9e4e2105fcd99
     cursor = db.cursor()
     result = []
 
-    cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s and votacion_id=%(votacion_id)s and pregunta_id=%(pregunta_id)s",
-                   {'usuario_id': usuario_id, 'votacion_id': votacion_id, 'pregunta_id': pregunta_id})
+    cursor.execute("SELECT * FROM votos WHERE token_usuario=%(token_usuario)s and token_votacion=%(token_votacion)s and token_pregunta=%(token_pregunta)s",
+                   {'token_usuario': token_usuario, 'token_votacion': token_votacion, 'token_pregunta': token_pregunta})
 
     for row in cursor.fetchall():
         result.append({
@@ -55,12 +74,12 @@ def get_voto_pregunta(db, usuario_id, votacion_id, pregunta_id):
     return result
 
 
-def consultar_votos_pregunta(db, pregunta_id, votacion_id):
+def consultar_votos_pregunta(db, token_votacion, token_pregunta):
     cursor = db.cursor()
     result = []
 
-    cursor.execute("SELECT * FROM votos WHERE pregunta_id=%(question_id)s and pregunta_id=%(question_id)s",
-                   {'question_id': pregunta_id, 'votacion_id': votacion_id})
+    cursor.execute("SELECT * FROM votos WHERE token_votacion=%(token_votacion)s and token_pregunta=%(token_question)s",
+                   {'token_votacion': token_votacion, 'token_question': token_pregunta})
 
     for row in cursor.fetchall():
         result.append({
@@ -76,12 +95,16 @@ def consultar_votos_pregunta(db, pregunta_id, votacion_id):
 # Inserción
 
 
+<<<<<<< HEAD
 def guardar_voto(db, usuario_id, pregunta_id, respuesta_id, votacion_id):
+=======
+def almacenar_voto(db, token_usuario, token_votacion, token_pregunta, token_respuesta):
+>>>>>>> f801a71bfd784fad55ab801ffef9e4e2105fcd99
     cursor = db.cursor()
     result = []
 
-    add_vote = "INSERT INTO votos (usuario_id, pregunta_id, respuesta_id, votacion_id) VALUES (%s, %s, %s, %s)"
-    data_vote1 = (usuario_id, pregunta_id, respuesta_id, votacion_id)
+    add_vote = "INSERT INTO votos (token_usuario, token_votacion, token_pregunta, token_respuesta) VALUES (%s, %s, %s, %s)"
+    data_vote1 = (token_usuario, token_votacion, token_pregunta, token_respuesta)
     cursor.execute(add_vote, data_vote1)
 
     db.commit()
