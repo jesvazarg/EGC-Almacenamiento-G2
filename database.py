@@ -17,22 +17,42 @@ def desconectar_db(db):
 # Consulta
 
 
-def comprobar_voto(db, usuario_id, votacion_id):
+def get_voto(db, usuario_id, votacion_id):
     cursor = db.cursor()
+    result = []
 
     cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s and votacion_id=%(votacion_id)s",
                    {'usuario_id': usuario_id, 'votacion_id': votacion_id})
 
-    return cursor.fetchall()
+    for row in cursor.fetchall():
+        result.append({
+            "id": row[0],
+            "token_usuario": row[1],
+            "token_votacion": row[2],
+            "token_pregunta": row[3],
+            "token_respuesta": row[4],
+        })
+
+    return result
 
 
-def comprobar_voto_pregunta(db, usuario_id, votacion_id, pregunta_id):
+def get_voto_pregunta(db, usuario_id, votacion_id, pregunta_id):
     cursor = db.cursor()
+    result = []
 
     cursor.execute("SELECT * FROM votos WHERE usuario_id=%(usuario_id)s and votacion_id=%(votacion_id)s and pregunta_id=%(pregunta_id)s",
                    {'usuario_id': usuario_id, 'votacion_id': votacion_id, 'pregunta_id': pregunta_id})
 
-    return cursor.fetchall()
+    for row in cursor.fetchall():
+        result.append({
+            "id": row[0],
+            "token_usuario": row[1],
+            "token_votacion": row[2],
+            "token_pregunta": row[3],
+            "token_respuesta": row[4],
+        })
+
+    return result
 
 
 def consultar_votos_pregunta(db, pregunta_id, votacion_id):
@@ -44,11 +64,11 @@ def consultar_votos_pregunta(db, pregunta_id, votacion_id):
 
     for row in cursor.fetchall():
         result.append({
-            "voto_id": row[0],
-            "usuario_id": row[1],
-            "votacion_id": row[2],
-            "pregunta_id": row[3],
-            "respuesta_id": row[4],
+            "id": row[0],
+            "token_usuario": row[1],
+            "token_votacion": row[2],
+            "token_pregunta": row[3],
+            "token_respuesta": row[4],
         })
 
     return result
@@ -56,7 +76,7 @@ def consultar_votos_pregunta(db, pregunta_id, votacion_id):
 # Inserción
 
 
-def almacenar_voto(db, usuario_id, pregunta_id, respuesta_id, votacion_id):
+def guardar_voto(db, usuario_id, pregunta_id, respuesta_id, votacion_id):
     cursor = db.cursor()
     result = []
 

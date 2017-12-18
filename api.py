@@ -1,6 +1,8 @@
 #encoding: UTF-8
-from flask import Flask, request
+from flask import Flask, request, render_template, json
 from flask_restful import Resource, Api, reqparse, abort
+from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
+
 from database import *
 from _mysql_exceptions import IntegrityError
 
@@ -8,99 +10,114 @@ app = Flask(__name__)
 api = Api(app)
 
 
+# ERRORES
+
+@app.errorhandler(NotFound)
+def handle_not_found(error=None):
+    if not error:
+        error = "Not Found."
+    return error, 404
+
+
+@app.errorhandler(BadRequest)
+def handle_bad_request(error=None):
+    if not error:
+        error = "Bad request."
+    return error, 400
+
+
+@app.errorhandler(Unauthorized)
+def handle_unauthorized(error=None):
+    if not error:
+        error = "Unauthorized."
+    return error, 401
+
+
 # GET
 
-
-class ComprobarVoto(Resource):
-    def get(self, usuario_id, votacion_id):
-        db = conectar_db()
-
-        votes = comprobar_voto(db, usuario_id, votacion_id)
-        print len(votes)
-
-        if len(votes) == 0:
-            abort(404, message="El usuario no ha realizado ningun voto en esta votacion.")
-        else:
-            result = []
-            for row in votes:
-                result.append({
-                    "voto_id": row[0],
-                    "usuario_id": row[1],
-                    "votacion_id": row[2],
-                    "pregunta_id": row[3],
-                    "respuesta_id": row[4],
-                })
-            desconectar_db(db)
-            return result
+@app.route('/get/comprobar_voto/<token_bd>/<token_usuario>/<token_votacion>', methods = ['GET'])
+def comprobar_voto(token_bd, token_usuario, token_votacion):
+    db = conectar_db()
 
 
-class ComprobarVotoPregunta(Resource):
-    def get(self, usuario_id, votacion_id, pregunta_id):
-        db = conectar_db()
+    # TODO: comprobar el token
 
-        votes = comprobar_voto_pregunta(db, usuario_id, votacion_id, pregunta_id)
-        print len(votes)
+    votes = get_voto(db, token_usuario, token_votacion)
 
-        if len(votes) == 0:
-            abort(404, message="El usuario no ha realizado ningun voto en esta pregunta de esta votacion.")
-        else:
-            result = []
-            for row in votes:
-                result.append({
-                    "voto_id": row[0],
-                    "usuario_id": row[1],
-                    "votacion_id": row[2],
-                    "pregunta_id": row[3],
-                    "respuesta_id": row[4],
-                })
-            desconectar_db(db)
-            return result
-
-
-class ObtenerVotos(Resource):
-    def get(self, token, pregunta_id, votacion_id):
-        db = conectar_db()
-
-        # TODO: Aqui hacemos las comprobaciones del token
-
-        votes = consultar_votos_pregunta(db, pregunta_id, votacion_id)
-
+    if len(votes) == 0:
+        desconectar_db(db)
+        return handle_not_found('El usuario no ha realizado ningun voto en esta votacion.')
+    else:
         desconectar_db(db)
 
-        return votes
+        result = json.dumps(votes)
+        return result
+
+
+@app.route('/get/comprobar_voto_pregunta/<token_bd>/<token_usuario>/<token_votacion>/<token_pregunta>', methods=['GET'])
+def comprobar_voto_pregunta(token_bd, token_usuario, token_votacion, token_pregunta):
+    db = conectar_db()
+
+    # TODO: comprobar el token
+
+    votes = get_voto_pregunta(db, token_usuario, token_votacion, token_pregunta)
+
+    if len(votes) == 0:
+        desconectar_db(db)
+        return handle_not_found('El usuario no ha realizado ningun voto en esta pregunta de esta votacion.')
+    else:
+        desconectar_db(db)
+
+        result = json.dumps(votes)
+        return result
+
+
+@app.route('/get/obtener_votos/<token_bd>/<token_votacion>/<token_pregunta>', methods=['GET'])
+def obtener_votos(token_bd, token_votacion, token_pregunta):
+    db = conectar_db()
+
+    # TODO: Aqui hacemos las comprobaciones del token
+
+    votes = consultar_votos_pregunta(db, token_pregunta, token_votacion)
+
+    desconectar_db(db)
+
+    votes = json.dumps(votes)
+    return votes
 
 # POST
 
-# Parámetros para el POST
 parser = reqparse.RequestParser()
-parser.add_argument('usuario_id')
-parser.add_argument('pregunta_id')
-parser.add_argument('respuesta_id')
-parser.add_argument('votacion_id')
+parser.add_argument('token_bd')
+parser.add_argument('token_usuario')
+parser.add_argument('token_votacion')
+parser.add_argument('token_pregunta')
+parser.add_argument('token_respuesta')
 
 
-class AlmacenarVoto(Resource):
-    def post(self):
-        args = parser.parse_args()
-        try:
-            db = conectar_db()
+@app.route('/post/almacenar_voto', methods = ['POST'])
+def almacenar_voto():
+    args = parser.parse_args()
 
-            print args
+    token_bd = args['token_bd']
+    usuario_id = args['token_usuario']
+    votacion_id = args['token_votacion']
+    pregunta_id = args['token_pregunta']
+    respuesta_id = args['token_respuesta']
 
-            almacenar_voto(db, args['usuario_id'], args['pregunta_id'], args['respuesta_id'], args['votacion_id'])
+    # TODO: comprobar el token
 
-            desconectar_db(db)
-        except IntegrityError:
-            abort(400, message="Un usuario sólo puede votar una vez a una pregunta.")
-        else:
-            return {"message": "El voto se ha almacenado satisfactoriamente."}
+    try:
+        db = conectar_db()
 
-# URLs api
+        guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
 
-api.add_resource(ComprobarVoto, "/get/comprobar_voto/<int:usuario_id>/<int:votacion_id>")
-api.add_resource(ComprobarVotoPregunta, "/get/comprobar_voto_pregunta/<int:usuario_id>/<int:votacion_id>/<int:pregunta_id>")
-api.add_resource(ObtenerVotos, "/get/obtener_votos/<int:token>/<int:pregunta_id>/<int:votacion_id>")
-api.add_resource(AlmacenarVoto, "/post/almacenar_voto")
+        desconectar_db(db)
+    except IntegrityError:
+        return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
+    else:
+        return {"message": "El voto se ha almacenado satisfactoriamente."}
+
 
 if __name__ == '__main__':
     app.run(debug=True)
