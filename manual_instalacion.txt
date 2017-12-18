@@ -1,30 +1,59 @@
-Manual de instalacion:
+Manual de instalación:
 
-1. Instalar el pyCharm
+1. Instalar PyCharm.
 
-2. Instalar python y git:
-	sudo apt-get install python (jesus lo puso asi sin especificar la version y le instalo la version 2.7.11)
-	sudo apt-get install git (si no funciona git, probad con git-all)
+	https://www.lifewire.com/how-to-install-the-pycharm-python-ide-in-linux-4091033 
+	(Instrucciones para instalar PyCharm en Linux)
+
+2. Instalar Python y git:
+	
+	sudo apt-get install python2.7
+	sudo apt-get install git (alternativa: sudo apt-get install git-all)
 
 3. Instalar MySQL Community Server 5.7.19:
-	desde la pagina https://dev.mysql.com/downloads/mysql/ instalar la version correspondiente, descomprimirla e instalarla (pedira la contraseña para el root, que va a ser root que es la que yo he puesto en la conexion a la bd)
-	Una vez se haya instalado creamos la bd desde terminal: abrimos terminal y ponemos "sudo su", a continuacion ponemos "mysql -uroot -proot".
-	Creamos la base de datos: "create database almacenamiento" (tiene que llamarse almacenamiento porque es el nombre que yo le he puesto XD)
-	Cogemos el script de creacion de la tabla y copiamos el contenido en terminal.
 
-4. Vamos a instalar las librerias necesarias, asi que si no tenemos "pip" instalado lo instalamos:
+	- Acceder a https://dev.mysql.com/downloads/mysql/ y descargar la version correspondiente.
+
+	- Descomprimir e instalar (la contraseña de root debe ser root).
+
+	- Una vez instalado, abrir la terminal y escribir "sudo su mysql -uroot -proot".
+
+	- Dentro de mysql, se crea la base de datos mediante el siguiente comando:
+
+	"create database almacenamiento"
+
+	- Una vez creada, se selecciona la base de datos "almacenamiento" mediante el siguiente comando:
+
+	"use almacenamiento"
+
+	- Finalmente, usando el script SQL proporcionado, se pega el contenido en la terminal para crear las tablas necesarias automáticamente.
+
+4. Instalar el gestor de paquetes pip para Python:
+
 	sudo apt-get install python-pip python-dev build-essential
 	sudo pip install --upgrade pip
 	sudo pip install --upgrade virtualenv
 
-5. Instalamos las librerias necesarias que son:
-	Flask version 0.12.2:
-		sudo pip install Flask
-	flask_restful version 0.3.6:
-		sudo pip install flask-restful
-	MySQLdb version 1.2.5:
-		sudo apt-get install python-mysqldb
+5. Para instalar automáticamente las librerias necesarias, utilizar el siguiente comando:
 
-6. Para comprobar el funcionamiento de la api se puede usar:
-	- postman: https://blog.bluematador.com/posts/postman-how-to-install-on-ubuntu-1604/?utm_source=hootsuite&utm_medium=twitter&utm_campaign= (esa es la pagina que he encontrado para la instalacion)
-	- RESTClient: https://addons.mozilla.org/es/firefox/addon/restclient/ (es una extension del firefox)
+	"pip install -r requirements.txt"
+
+6. Para comprobar el funcionamiento de la API se puede usar, por ejemplo:
+	
+	- Postman:
+
+	Comandos para instalar Postman en Linux:
+
+	wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
+	sudo tar -xzf postman.tar.gz -C /opt
+	rm postman.tar.gz
+	sudo ln -s /opt/Postman/Postman /usr/bin/postman
+
+
+	- RESTClient:
+
+	Instalar la siguiente extensión de Firefox:
+
+	https://addons.mozilla.org/es/firefox/addon/restclient/
+
+	
