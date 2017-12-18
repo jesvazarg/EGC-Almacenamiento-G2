@@ -85,6 +85,8 @@ class AlmacenarVoto(Resource):
         try:
             db = conectar_db()
 
+            print args
+
             almacenar_voto(db, args['usuario_id'], args['pregunta_id'], args['respuesta_id'], args['votacion_id'])
 
             desconectar_db(db)
