@@ -41,7 +41,7 @@ def comprobar_voto(token_bd, token_usuario, token_votacion):
     db = conectar_db()
 
     if not comprobar_token(db, token_bd):
-        return handle_not_found('Token incorrecto.')
+        return handle_unauthorized('Token incorrecto.')
 
     votes = get_voto(db, token_usuario, token_votacion)
 
@@ -60,7 +60,7 @@ def comprobar_voto_pregunta(token_bd, token_usuario, token_votacion, token_pregu
     db = conectar_db()
 
     if not comprobar_token(db, token_bd):
-        return handle_not_found('Token incorrecto.')
+        return handle_unauthorized('Token incorrecto.')
 
     votes = get_voto_pregunta(db, token_usuario, token_votacion, token_pregunta)
 
@@ -79,7 +79,7 @@ def obtener_votos(token_bd, token_votacion, token_pregunta):
     db = conectar_db()
 
     if not comprobar_token(db, token_bd):
-        return handle_not_found('Token incorrecto.')
+        return handle_unauthorized('Token incorrecto.')
 
     votes = consultar_votos_pregunta(db, token_pregunta, token_votacion)
 
@@ -111,7 +111,7 @@ def almacenar_voto():
     db = conectar_db()
 
     if not comprobar_token(db, token_bd):
-        return handle_not_found('Token incorrecto.')
+        return handle_unauthorized('Token incorrecto.')
 
     try:
         guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
