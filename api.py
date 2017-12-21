@@ -110,17 +110,20 @@ def almacenar_voto():
 
     db = conectar_db()
 
-    if not comprobar_token(db, token_bd):
-        return handle_unauthorized('Token incorrecto.')
+    guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
+    return "Holi"
 
-    try:
-        guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
-    except IntegrityError:
-        desconectar_db(db)
-        return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
-    else:
-        desconectar_db(db)
-        return {"message": "El voto se ha almacenado satisfactoriamente."}
+    # if not comprobar_token(db, token_bd):
+    #     return handle_unauthorized('Token incorrecto.')
+    #
+    # try:
+    #     guardar_voto(db, usuario_id, votacion_id, pregunta_id, respuesta_id)
+    # except IntegrityError:
+    #     desconectar_db(db)
+    #     return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
+    # else:
+    #     desconectar_db(db)
+    #     return {"message": "El voto se ha almacenado satisfactoriamente."}
 
 
 if __name__ == '__main__':
