@@ -1,3 +1,4 @@
+#encoding:UTF-8
 from database import *
 import requests
 
