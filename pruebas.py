@@ -7,33 +7,51 @@ if __name__ == '__main__':
 
     # Pruebas para el metodo get_voto
 
+    print "get voto (Prueba positiva)"
+
     prueba_positiva = get_voto(db, "1", "1") # Prueba positiva
     print prueba_positiva
 
+    print "get voto (Prueba negativa, no existe el token_usuario)"
+
     prueba_negativa1 = get_voto(db, "123", "1") # Prueba negativa, no existe el token_usuario
     print prueba_negativa1
+
+    print "get voto (Prueba negativa, no existe el token_votacion)"
 
     prueba_negativa = get_voto(db, "1", "123")  # Prueba negativa, no existe el token_votacion
     print prueba_negativa
 
     # Pruebas para el metodo get_voto_pregunta
 
+    print "get voto pregunta (Prueba positiva)"
+
     prueba_positiva = get_voto_pregunta(db, "1", "1", "1")  # Prueba positiva
     print prueba_positiva
+
+    print "get voto pregunta (Prueba negativa, no existe el token_usuario)"
 
     prueba_negativa1 = get_voto_pregunta(db, "123", "1", "1")  # Prueba negativa, no existe el token_usuario
     print prueba_negativa1
 
+    print "get voto pregunta (Prueba negativa, no existe el token_votacion)"
+
     prueba_negativa2 = get_voto_pregunta(db, "1", "123", "1")  # Prueba negativa, no existe el token_votacion
     print prueba_negativa2
+
+    print "get voto pregunta (Prueba negativa, no existe el token_pregunta)"
 
     prueba_negativa3 = get_voto_pregunta(db, "1", "1", "123")  # Prueba negativa, no existe el token_pregunta
     print prueba_negativa3
 
     # Pruebas para el metodo comprobar_token
 
+    print "comprobar token (Prueba positiva)"
+
     prueba_positiva = comprobar_token(db, "12345QWERTY")  # Prueba positiva
     print prueba_positiva
+
+    print "comprobar token (Prueba negativa, no existe el token)"
 
     prueba_negativa1 = comprobar_token(db, "123")  # Prueba negativa, no existe el token
     print prueba_negativa1
@@ -49,7 +67,7 @@ if __name__ == '__main__':
     print obtener_voto
     print obtener_voto.text
 
-    print "Obtener voto (Sin token)"
+    print "Obtener voto (Token incorrecto)"
 
     print obtener_voto_token_incorrecto
     print obtener_voto_token_incorrecto.text
@@ -70,7 +88,7 @@ if __name__ == '__main__':
     print almacenar_voto
     print almacenar_voto.text
 
-    print "Almacenar voto (Sin token)"
+    print "Almacenar voto (Token incorrecto)"
 
     print almacenar_voto_token_incorrecto
     print almacenar_voto_token_incorrecto.text
@@ -92,7 +110,7 @@ if __name__ == '__main__':
     print comprobar_voto
     print comprobar_voto.text
 
-    print "Comprobar voto (Sin token)"
+    print "Comprobar voto (Token incorrecto)"
 
     print comprobar_voto_token_incorrecto
     print comprobar_voto_token_incorrecto.text
@@ -113,7 +131,7 @@ if __name__ == '__main__':
     print comprobar_voto_pregunta
     print comprobar_voto_pregunta.text
 
-    print "Comprobar voto pregunta (Sin token)"
+    print "Comprobar voto pregunta (Token incorrecto)"
 
     print comprobar_voto_pregunta_token_incorrecto
     print comprobar_voto_pregunta_token_incorrecto.text
