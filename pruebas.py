@@ -24,6 +24,7 @@ if __name__ == '__main__':
 
     # Pruebas para el metodo get_voto_pregunta
 
+    print "------------------------------------------"
     print "get voto pregunta (Prueba positiva)"
 
     prueba_positiva = get_voto_pregunta(db, "1", "1", "1")  # Prueba positiva
@@ -46,6 +47,7 @@ if __name__ == '__main__':
 
     # Pruebas para el metodo comprobar_token
 
+    print "------------------------------------------"
     print "comprobar token (Prueba positiva)"
 
     prueba_positiva = comprobar_token(db, "12345QWERTY")  # Prueba positiva
@@ -62,6 +64,7 @@ if __name__ == '__main__':
     obtener_voto_token_incorrecto = requests.get("http://localhost:5000/get/obtener_votos/DFKJGE54368/1/1")
     obtener_voto_votacion_incorrecta = requests.get("http://localhost:5000/get/obtener_votos/QWERTY12345/78/1")
 
+    print "------------------------------------------"
     print "Obtener voto (Llamada Correcta)"
 
     print obtener_voto
@@ -83,6 +86,7 @@ if __name__ == '__main__':
     almacenar_voto_token_incorrecto = requests.post("http://localhost:5000/post/almacenar_voto", {"token_bd":"FDAIFJ52987","token_usuario":"26","token_votacion":"1","token_pregunta":"2","token_respuesta":"1"})
     almacenar_voto_repetido = requests.post("http://localhost:5000/post/almacenar_voto", {"token_bd":"QWERTY12345","token_usuario":"1","token_votacion":"1","token_pregunta":"2","token_respuesta":"1"})
 
+    print "------------------------------------------"
     print "Almacenar voto (Llamada Correcta)"
 
     print almacenar_voto
@@ -105,6 +109,7 @@ if __name__ == '__main__':
     comprobar_voto_token_incorrecto = requests.get("http://127.0.0.1:5000/get/comprobar_voto/GFJLEO54302/1/1/1")
     comprobar_voto_respuesta_vacia = requests.get("http://127.0.0.1:5000/get/comprobar_voto/QWERTY12345/19/1")
 
+    print "------------------------------------------"
     print "Comprobar voto (Llamada Correcta)"
 
     print comprobar_voto
@@ -126,6 +131,7 @@ if __name__ == '__main__':
     comprobar_voto_pregunta_token_incorrecto = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/DGLQNF54932/1/1/1/1")
     comprobar_voto_pregunta_respuesta_vacia = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/QWERTY12345/19/1/1")
 
+    print "------------------------------------------"
     print "Comprobar voto pregunta (Llamada Correcta)"
 
     print comprobar_voto_pregunta
@@ -140,6 +146,20 @@ if __name__ == '__main__':
 
     print comprobar_voto_pregunta_respuesta_vacia
     print comprobar_voto_pregunta_respuesta_vacia.text
+
+    # Pruebas para el metodo consultar_votos_pregunta
+
+    print "------------------------------------------"
+    print "Consultar voto pregunta"
+
+    prueba_positiva = consultar_votos_pregunta(db, "1", "1")  # Prueba positiva
+    print prueba_positiva
+
+    print "Consultar voto pregunta (Respuesta vacía)"
+
+    prueba_negativa = consultar_votos_pregunta(db, "123", "1")  # Error, no existe el token
+    print prueba_negativa
+
 
 
 
