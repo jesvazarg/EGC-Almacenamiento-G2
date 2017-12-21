@@ -40,25 +40,51 @@ if __name__ == '__main__':
 
     # Pruebas para el metodo obtener_votos
 
-    prueba_positiva = get_voto(db, "1", "1")  # Prueba positiva
-    print prueba_positiva
+    obtener_voto = requests.get("http://localhost:5000/get/obtener_votos/QWERTY12345/1/1")
+    obtener_voto_token_incorrecto = requests.get("http://localhost:5000/get/obtener_votos/DFKJGE54368/1/1")
+    obtener_voto_votacion_incorrecta = requests.get("http://localhost:5000/get/obtener_votos/QWERTY12345/78/1")
 
-    prueba_negativa = get_voto(db, "123", "1")  # Error, no existe el token
-    print prueba_negativa
+    print "Obtener voto (Llamada Correcta)"
+
+    print obtener_voto
+    print obtener_voto.text
+
+    print "Obtener voto (Sin token)"
+
+    print obtener_voto_token_incorrecto
+    print obtener_voto_token_incorrecto.text
+
+    print "Obtener voto (Respuesta vacia)"
+
+    print obtener_voto_votacion_incorrecta
+    print obtener_voto_votacion_incorrecta.text
 
     # Pruebas para el metodo almacenar_votos
 
-    prueba_positiva = get_voto(db, "1", "1")  # Prueba positiva
-    print prueba_positiva
+    almacenar_voto = requests.post("http://localhost:5000/post/almacenar_voto", {"token_bd":"QWERTY12345","token_usuario":"25","token_votacion":"1","token_pregunta":"2","token_respuesta":"1"})
+    almacenar_voto_token_incorrecto = requests.post("http://localhost:5000/post/almacenar_voto", {"token_bd":"FDAIFJ52987","token_usuario":"26","token_votacion":"1","token_pregunta":"2","token_respuesta":"1"})
+    almacenar_voto_repetido = requests.post("http://localhost:5000/post/almacenar_voto", {"token_bd":"QWERTY12345","token_usuario":"1","token_votacion":"1","token_pregunta":"2","token_respuesta":"1"})
 
-    prueba_negativa = get_voto(db, "123", "1")  # Error, no existe el token
-    print prueba_negativa
+    print "Almacenar voto (Llamada Correcta)"
+
+    print almacenar_voto
+    print almacenar_voto.text
+
+    print "Almacenar voto (Sin token)"
+
+    print almacenar_voto_token_incorrecto
+    print almacenar_voto_token_incorrecto.text
+
+    print "Almacenar voto (Respuesta vacia)"
+
+    print almacenar_voto_repetido
+    print almacenar_voto_repetido.text
 
 
     # Pruebas para el metodo comprobar voto
 
     comprobar_voto = requests.get("http://127.0.0.1:5000/get/comprobar_voto/QWERTY12345/1/1")
-    comprobar_voto_sin_token = requests.get("http://127.0.0.1:5000/get/comprobar_voto/1/1/1")
+    comprobar_voto_token_incorrecto = requests.get("http://127.0.0.1:5000/get/comprobar_voto/GFJLEO54302/1/1/1")
     comprobar_voto_respuesta_vacia = requests.get("http://127.0.0.1:5000/get/comprobar_voto/QWERTY12345/19/1")
 
     print "Comprobar voto (Llamada Correcta)"
@@ -68,8 +94,8 @@ if __name__ == '__main__':
 
     print "Comprobar voto (Sin token)"
 
-    print comprobar_voto_sin_token
-    print comprobar_voto_sin_token.text
+    print comprobar_voto_token_incorrecto
+    print comprobar_voto_token_incorrecto.text
 
     print "Comprobar voto (Respuesta vacia)"
 
@@ -79,7 +105,7 @@ if __name__ == '__main__':
     # Pruebas para el metodo comprobar voto pregunta
 
     comprobar_voto_pregunta = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/QWERTY12345/1/1/1")
-    comprobar_voto_pregunta_sin_token = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/1/1/1/1")
+    comprobar_voto_pregunta_token_incorrecto = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/DGLQNF54932/1/1/1/1")
     comprobar_voto_pregunta_respuesta_vacia = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/QWERTY12345/19/1/1")
 
     print "Comprobar voto pregunta (Llamada Correcta)"
@@ -89,8 +115,8 @@ if __name__ == '__main__':
 
     print "Comprobar voto pregunta (Sin token)"
 
-    print comprobar_voto_pregunta_sin_token
-    print comprobar_voto_pregunta_sin_token.text
+    print comprobar_voto_pregunta_token_incorrecto
+    print comprobar_voto_pregunta_token_incorrecto.text
 
     print "Comprobar voto pregunta (Respuesta vacía)"
 
