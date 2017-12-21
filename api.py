@@ -120,7 +120,7 @@ def almacenar_voto():
         return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
     else:
         desconectar_db(db)
-        return {"message": "El voto se ha almacenado satisfactoriamente."}
+        return json.dumps({"message": "El voto se ha almacenado satisfactoriamente."})
 
 
 if __name__ == '__main__':

@@ -92,12 +92,9 @@ def consultar_votos_pregunta(db, token_votacion, token_pregunta):
 
 def guardar_voto(db, token_usuario, token_votacion, token_pregunta, token_respuesta):
     cursor = db.cursor()
-    result = []
 
     add_vote = "INSERT INTO votos (token_usuario, token_votacion, token_pregunta, token_respuesta) VALUES (%s, %s, %s, %s)"
     data_vote1 = (token_usuario, token_votacion, token_pregunta, token_respuesta)
     cursor.execute(add_vote, data_vote1)
 
     db.commit()
-
-    return result

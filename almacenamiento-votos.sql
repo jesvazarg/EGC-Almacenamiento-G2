@@ -64,7 +64,7 @@ INSERT INTO `votos` (`id`, `token_usuario`, `token_votacion`, `token_pregunta`, 
 --
 ALTER TABLE `votos`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `token_usuario, token_votacion, token_pregunta` (`token_usuario`,`token_votaciontoken_`,`token_pregunta`) USING BTREE;
+  ADD UNIQUE KEY `token_usuario, token_votacion, token_pregunta` (`token_usuario`,`token_votacion`,`token_pregunta`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
