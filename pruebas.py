@@ -160,11 +160,15 @@ if __name__ == '__main__':
     prueba_negativa = consultar_votos_pregunta(db, "123", "1")  # Error, no existe el token
     print prueba_negativa
 
+    # Pruebas para el metodo guardar_voto
 
+    print "------------------------------------------"
+    print "Guardar voto"
 
+    prueba_positiva = guardar_voto(db,"1", "1", "6", "3")  # Prueba positiva
+    print prueba_positiva
 
+    print "Guardar voto (Respuesta vacía)"
 
-
-
-
-
+    prueba_negativa = guardar_voto(db, "1", "1", "1", "1")  # Error, ya existe el token
+    print prueba_negativa
