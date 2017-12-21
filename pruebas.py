@@ -35,3 +35,19 @@ if __name__ == '__main__':
 
     prueba_negativa1 = comprobar_token(db, "123")  # Prueba negativa, no existe el token
     print prueba_negativa1
+
+    # Pruebas para el metodo obtener_votos
+
+    prueba_positiva = get_voto(db, "1", "1")  # Prueba positiva
+    print prueba_positiva
+
+    prueba_negativa = get_voto(db, "123", "1")  # Error, no existe el token
+    print prueba_negativa
+
+    # Pruebas para el metodo almacenar_votos
+
+    prueba_positiva = get_voto(db, "1", "1")  # Prueba positiva
+    print prueba_positiva
+
+    prueba_negativa = get_voto(db, "123", "1")  # Error, no existe el token
+    print prueba_negativa
