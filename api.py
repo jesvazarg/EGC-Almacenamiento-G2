@@ -147,11 +147,11 @@ def almacenar_voto_multiple():
         respuesta_token = v['token_respuesta']
         print pregunta_token
         print respuesta_token
-        # try:
-        guardar_voto(db, usuario_id, votacion_id, pregunta_token, respuesta_token)
-        # except IntegrityError:
-        #     desconectar_db(db)
-        #     return handle_bad_request("Un usuario solo puede votar una vez a una pregunta (Pregunta: "+pregunta_token+").")
+        try:
+            guardar_voto(db, usuario_id, votacion_id, pregunta_token, respuesta_token)
+        except IntegrityError:
+            desconectar_db(db)
+            return handle_bad_request("Un usuario solo puede votar una vez a una pregunta (Pregunta: "+pregunta_token+").")
         # else:
     desconectar_db(db)
     return jsonify({"message": "El voto se ha almacenado satisfactoriamente."})
