@@ -1,0 +1,4 @@
+curl -i -X POST http://127.0.0.1:5000/post/almacenar_voto_multiple -H "Content-Type: application/json" -d '{"token_bd":"12345QWERTY", "token_usuario": "1", "token_votacion":"12", "token_voto":{"0":{"token_pregunta":"1", "token_respuesta":"1"},"1":{"token_pregunta":"2", "token_respuesta":"1"}}}'
+
+curl -i -X POST http://127.0.0.1:5000/post/almacenar_voto_multiple -H "Content-Type: application/json" -d '{"token_bd":"12345QWERTY", "token_usuario": "1", "token_votacion":"12", "token_voto":[{"token_pregunta":"1", "token_respuesta":"1"},{"token_pregunta":"2", "token_respuesta":"1"}]}'
+
