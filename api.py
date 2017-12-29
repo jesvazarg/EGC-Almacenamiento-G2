@@ -122,7 +122,7 @@ def almacenar_voto():
         return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
     else:
         desconectar_db(db)
-        return {"message": "El voto se ha almacenado satisfactoriamente."}
+        return jsonify({"message": "El voto se ha almacenado satisfactoriamente."})
 
 
 @app.route('/post/almacenar_voto_multiple', methods=['POST'])
@@ -142,17 +142,14 @@ def almacenar_voto_multiple():
         return handle_unauthorized('Token incorrecto.')
 
     for k, v in array_votos.items():
-        print("Code : {0}, Value : {1}".format(k, v))
         pregunta_token = v['token_pregunta']
         respuesta_token = v['token_respuesta']
-        print pregunta_token
-        print respuesta_token
+
         try:
             guardar_voto(db, usuario_id, votacion_id, pregunta_token, respuesta_token)
         except IntegrityError:
             desconectar_db(db)
-            return handle_bad_request("Un usuario solo puede votar una vez a una pregunta (Pregunta: "+pregunta_token+").")
-        # else:
+            return handle_bad_request("Un usuario solo puede votar una vez a una pregunta.")
     desconectar_db(db)
     return jsonify({"message": "El voto se ha almacenado satisfactoriamente."})
 
