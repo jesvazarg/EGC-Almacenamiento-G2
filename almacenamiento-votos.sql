@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `votos`;
 CREATE TABLE `votos` (
   `id` int(11) NOT NULL,
-  `token_usuario` char(11) NOT NULL,
-  `token_votacion` char(11) NOT NULL,
-  `token_pregunta` char(11) NOT NULL,
-  `token_respuesta` char(11) DEFAULT NULL
+  `token_usuario` char(64) NOT NULL,
+  `token_votacion` char(64) NOT NULL,
+  `token_pregunta` char(64) NOT NULL,
+  `token_respuesta` char(64) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --

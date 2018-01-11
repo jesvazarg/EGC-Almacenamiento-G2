@@ -6,11 +6,12 @@ from flask_restful import Api, reqparse
 from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
 
 from database import *
+from cifrado_aes import *
 from _mysql_exceptions import IntegrityError
 
 app = Flask(__name__)
 api = Api(app)
-
+key = 'Almacen de votos'
 
 # ERRORES
 
@@ -105,10 +106,14 @@ def almacenar_voto():
     args = parser.parse_args()
 
     token_bd = args['token_bd']
+
     usuario_id = args['token_usuario']
     votacion_id = args['token_votacion']
+
     pregunta_id = args['token_pregunta']
+
     respuesta_id = args['token_respuesta']
+    respuesta_id = encrypt(respuesta_id,key)
 
     db = conectar_db()
 
@@ -131,7 +136,9 @@ def almacenar_voto_multiple():
 
     token_bd = args['token_bd']
     usuario_id = args['token_usuario']
+
     votacion_id = args['token_votacion']
+
     array_votos = args['token_voto']
 
     array_votos = ast.literal_eval(array_votos)
@@ -143,7 +150,9 @@ def almacenar_voto_multiple():
 
     for k, v in array_votos.items():
         pregunta_token = v['token_pregunta']
+
         respuesta_token = v['token_respuesta']
+        respuesta_token = encrypt(respuesta_token,key)
 
         try:
             guardar_voto(db, usuario_id, votacion_id, pregunta_token, respuesta_token)
