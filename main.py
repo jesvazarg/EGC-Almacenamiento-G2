@@ -164,4 +164,6 @@ def almacenar_voto_multiple():
 
 
 if __name__ == '__main__':
+    ejecutar_script_archivo('almacenamiento-votos.sql')
+
     app.run(debug=True)
