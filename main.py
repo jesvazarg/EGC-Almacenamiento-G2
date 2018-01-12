@@ -9,6 +9,10 @@ from database import *
 from cifrado_aes import *
 from _mysql_exceptions import IntegrityError
 
+import warnings
+warnings.filterwarnings("ignore", "Unknown table.*")
+warnings.filterwarnings("ignore", message = "Changing sql mode 'NO_AUTO_CREATE_USER' is deprecated. It will be removed in a future release.")
+
 app = Flask(__name__)
 api = Api(app)
 key = 'Almacen de votos'
