@@ -1,15 +1,17 @@
 #encoding: UTF-8
+import ast
 
-from flask import Flask, json
+from flask import Flask, json, jsonify
 from flask_restful import Api, reqparse
 from werkzeug.exceptions import NotFound, BadRequest, Unauthorized
 
 from database import *
+from cifrado_aes import *
 from _mysql_exceptions import IntegrityError
 
 app = Flask(__name__)
 api = Api(app)
-
+key = 'Almacen de votos'
 
 # ERRORES
 
@@ -36,7 +38,7 @@ def handle_unauthorized(error=None):
 
 # GET
 
-@app.route('/get/comprobar_voto/<token_bd>/<token_usuario>/<token_votacion>', methods = ['GET'])
+@app.route('/get/comprobar_voto/<token_bd>/<token_usuario>/<token_votacion>', methods=['GET'])
 def comprobar_voto(token_bd, token_usuario, token_votacion):
     db = conectar_db()
 
@@ -96,17 +98,22 @@ parser.add_argument('token_usuario')
 parser.add_argument('token_votacion')
 parser.add_argument('token_pregunta')
 parser.add_argument('token_respuesta')
+parser.add_argument('token_voto')
 
 
-@app.route('/post/almacenar_voto', methods = ['POST'])
+@app.route('/post/almacenar_voto', methods=['POST'])
 def almacenar_voto():
     args = parser.parse_args()
 
     token_bd = args['token_bd']
+
     usuario_id = args['token_usuario']
     votacion_id = args['token_votacion']
+
     pregunta_id = args['token_pregunta']
+
     respuesta_id = args['token_respuesta']
+    respuesta_id = encrypt(respuesta_id,key)
 
     db = conectar_db()
 
@@ -120,8 +127,43 @@ def almacenar_voto():
         return handle_bad_request("Un usuario sólo puede votar una vez a una pregunta.")
     else:
         desconectar_db(db)
-        return {"message": "El voto se ha almacenado satisfactoriamente."}
+        return json.dumps({"message": "El voto se ha almacenado satisfactoriamente."})
+
+
+@app.route('/post/almacenar_voto_multiple', methods=['POST'])
+def almacenar_voto_multiple():
+    args = parser.parse_args()
+
+    token_bd = args['token_bd']
+    usuario_id = args['token_usuario']
+
+    votacion_id = args['token_votacion']
+
+    array_votos = args['token_voto']
+
+    array_votos = ast.literal_eval(array_votos)
+
+    db = conectar_db()
+
+    if not comprobar_token(db, token_bd):
+        return handle_unauthorized('Token incorrecto.')
+
+    for k, v in array_votos.items():
+        pregunta_token = v['token_pregunta']
+
+        respuesta_token = v['token_respuesta']
+        respuesta_token = encrypt(respuesta_token,key)
+
+        try:
+            guardar_voto(db, usuario_id, votacion_id, pregunta_token, respuesta_token)
+        except IntegrityError:
+            desconectar_db(db)
+            return handle_bad_request("Un usuario solo puede votar una vez a una pregunta.")
+    desconectar_db(db)
+    return json.dumps({"message": "El voto se ha almacenado satisfactoriamente."})
 
 
 if __name__ == '__main__':
+    ejecutar_script_archivo('almacenamiento-votos.sql')
+
     app.run(debug=True)
