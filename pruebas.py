@@ -15,7 +15,7 @@ if __name__ == '__main__':
     prueba_positiva = requests.get("http://127.0.0.1:5000/get/comprobar_voto/QWERTY12345/1/1")
     print "Resultado Esperado: Array con los datos de los votos realizados por el usuario con token=1"
     print "Resultado Obtenido: " + str(prueba_positiva) + str(prueba_positiva.text)
-    if str(prueba_positiva) == '[]':
+    if str(prueba_positiva) == '<Response [404]>':
         print "---------------------------------------------------------"
         print "INCORRECTO"
     else:
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     prueba_positiva = requests.get("http://127.0.0.1:5000/get/comprobar_voto_pregunta/QWERTY12345/1/1/1")
     print "Resultado Esperado: Array con los datos de los votos realizados por el usuario con token=1 en la pregunta con token=1"
     print "Resultado Obtenido: " + str(prueba_positiva) + str(prueba_positiva.text)
-    if str(prueba_positiva) == '[]':
+    if str(prueba_positiva) == '<Response [404]>':
         print "---------------------------------------------------------"
         print "INCORRECTO"
     else:
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     prueba_positiva = get_voto(db, "1", "1") # Prueba positiva
     print "Resultado Esperado: Array con los datos de los votos realizados por el usuario a la votación dada"
     print "Resultado Obtenido: " + str(prueba_positiva)
-    if str(prueba_positiva) == '[]':
+    if str(prueba_positiva) == '<Response [404]>':
         print "---------------------------------------------------------"
         print "INCORRECTO"
     else:
@@ -222,7 +222,7 @@ if __name__ == '__main__':
     prueba_positiva = requests.get("http://localhost:5000/get/obtener_votos/QWERTY12345/1/1")
     print "Resultado Esperado: Array con los datos de los votos realizados por el usuario con token=1"
     print "Resultado Obtenido: " + str(prueba_positiva.text)
-    if str(prueba_positiva) == '[]':
+    if str(prueba_positiva) == '<Response [404]>':
         print "---------------------------------------------------------"
         print "INCORRECTO"
     else:
@@ -309,7 +309,7 @@ if __name__ == '__main__':
     prueba_positiva = consultar_votos_pregunta(db, "1", "1")  # Prueba positiva
     print "Resultado Esperado: Array con los datos de los votos realizados por el usuario con votación de token=1 y pregunta de token=1"
     print "Resultado Obtenido: " + str(prueba_positiva)
-    if str(prueba_positiva) == '[]':
+    if str(prueba_positiva) == '<Response [404]>':
         print "---------------------------------------------------------"
         print "INCORRECTO"
     else:

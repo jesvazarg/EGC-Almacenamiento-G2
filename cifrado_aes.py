@@ -26,4 +26,4 @@ def decrypt(texto_encriptado,key):
 key = "Almacen de votos"
 test = "25"
 
-print (encrypt(test,key))
+# print (encrypt(test,key))

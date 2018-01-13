@@ -33,14 +33,15 @@ def ejecutar_script_archivo(filename):
 
     # Execute every command from the input file
     for command in sqlCommands:
-        print command
+        # print command
         # This will skip and report errors
         # For example, if the tables do not yet exist, this will skip over
         # the DROP TABLE commands
         try:
             c.execute(command)
         except MySQLdb.OperationalError, msg:
-            print "Command skipped: ", msg
+            if not msg[1]=='Query was empty':
+                print "Command skipped: ", msg
 
 # Consulta
 
