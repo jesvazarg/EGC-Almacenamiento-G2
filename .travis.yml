@@ -1,0 +1,21 @@
+language: python
+sudo: required
+python:
+- "2.7.12"
+services:
+- mysql
+
+install:
+- pip install -r requirements.txt
+
+before_install:
+- mysql -e 'DROP DATABASE IF EXISTS almacenamiento'
+- mysql -e 'CREATE DATABASE almacenamiento;'
+- mysql -u root —default-character-set=utf8 almacenamiento < almacenamiento-votos.sql
+- mysql -u root —default-character-set=utf8 almacenamiento < datos-prueba.sql
+
+before_script:
+- python main.py
+
+#script:
+#- py.test pruebas.py
