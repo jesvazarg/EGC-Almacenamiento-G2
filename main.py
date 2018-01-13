@@ -168,15 +168,15 @@ def almacenar_voto_multiple():
 
 
 if __name__ == '__main__':
-    dbCreada = False
-    db = MySQLdb.connect(host="127.0.0.1", user="root", passwd="root")
-    cursor = db.cursor()
-    cursor.execute("show databases")
-    for x in cursor.fetchall():
-        if x[0] == "almacenamiento":
-            dbCreada = True
-    if dbCreada == False:
-        ejecutar_script_archivo('almacenamiento-votos.sql')
-    db.close()
+    # dbCreada = False
+    # db = MySQLdb.connect(host="127.0.0.1", user="root", passwd="root")
+    # cursor = db.cursor()
+    # cursor.execute("show databases")
+    # for x in cursor.fetchall():
+    #     if x[0] == "almacenamiento":
+    #         dbCreada = True
+    # if dbCreada == False:
+    #     ejecutar_script_archivo('almacenamiento-votos.sql')
+    # db.close()
 
     app.run(debug=True)

@@ -1,12 +1,9 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
 --
 -- Base de datos: `almacenamiento`
 --
 
-DROP DATABASE IF EXISTS `almacenamiento`;
-CREATE DATABASE `almacenamiento`;
+--DROP DATABASE IF EXISTS `almacenamiento`;
+--CREATE DATABASE `almacenamiento`;
 
 USE `almacenamiento`;
 
