@@ -268,6 +268,13 @@ if __name__ == '__main__':
     if str(prueba_positiva) == "<Response [200]>":
         print "---------------------------------------------------------"
         print "CORRECTO"
+
+        cursor = db.cursor()
+        cursor.execute("use almacenamiento")
+        cursor.execute("DELETE FROM votos WHERE token_usuario='28' and token_votacion='1' and token_pregunta='2'")
+
+        db.commit()
+
     elif str(prueba_positiva) == "<Response [400]>":
         print "---------------------------------------------------------"
         print "La llamada está bien pero ese voto ya existe y no se puede duplicar"
@@ -365,3 +372,5 @@ if __name__ == '__main__':
         print "INCORRECTO"
 
     print "---------------------------------------------------------"
+
+
