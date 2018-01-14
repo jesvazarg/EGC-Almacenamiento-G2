@@ -2,7 +2,7 @@
 from database import *
 import requests
 from _mysql_exceptions import IntegrityError
-from random import randint
+
 
 if __name__ == '__main__':
     db = conectar_db()
@@ -252,7 +252,7 @@ if __name__ == '__main__':
     else:
         print "---------------------------------------------------------"
         print "INCORRECTO"
-    
+
     print "---------------------------------------------------------"
 
 
@@ -314,7 +314,7 @@ if __name__ == '__main__':
         print "INCORRECTO"
     else:
         print "-------------------------------------------------------------"
-        print "CORRECTO" 
+        print "CORRECTO"
 
     print "-------------------------------------------------------------"
     print "Consultar voto pregunta: PRUEBA 8.2 (Respuesta vacía)"
@@ -327,13 +327,13 @@ if __name__ == '__main__':
     else:
         print "---------------------------------------------------------"
         print "INCORRECTO"
-    
+
     print "---------------------------------------------------------"
 
     print "========================================================="
     print "PRUEBA 9: Guardar voto (Unitaria)"
     print "========================================================="
-    
+
     print "Guardar voto: PRUEBA 9.1 (Llamada correcta)"
     print "Resultado Esperado: None"
     try:
@@ -365,5 +365,3 @@ if __name__ == '__main__':
         print "INCORRECTO"
 
     print "---------------------------------------------------------"
-    
-
