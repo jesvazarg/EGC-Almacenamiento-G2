@@ -268,7 +268,6 @@ if __name__ == '__main__':
     if str(prueba_positiva) == "<Response [200]>":
         print "---------------------------------------------------------"
         print "CORRECTO"
-        db = conectar_db()
         cursor = db.cursor()
         cursor.execute("DELETE FROM votos WHERE token_usuario='28' and token_votacion='1' and token_pregunta='2'")
         db.commit()
