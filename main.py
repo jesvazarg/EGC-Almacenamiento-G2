@@ -94,6 +94,20 @@ def obtener_votos(token_bd, token_votacion, token_pregunta):
     votes = json.dumps(votes)
     return votes
 
+@app.route('/get/obtener_votos_votacion/<token_bd>/<token_votacion>', methods=['GET'])
+def obtener_votos(token_bd, token_votacion):
+    db = conectar_db()
+
+    if not comprobar_token(db, token_bd):
+        return handle_unauthorized('Token incorrecto.')
+
+    votes = consultar_votos_votacion(db, token_votacion)
+
+    desconectar_db(db)
+
+    votes = json.dumps(votes)
+    return votes
+
 # POST
 
 parser = reqparse.RequestParser()
