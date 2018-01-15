@@ -255,6 +255,47 @@ if __name__ == '__main__':
 
     print "---------------------------------------------------------"
 
+    print "========================================================="
+    print "PRUEBA 10: Obtener votos votacion (Funcional)"
+    print "========================================================="
+
+    print "Obtener votos votacion: PRUEBA 10.1 (Llamada correcta)"
+    prueba_positiva = requests.get("http://localhost:5000/get/obtener_votos_votacion/QWERTY12345/1")
+    print "Resultado Esperado: Array con los datos de los votos de la votacion con token=1"
+    print "Resultado Obtenido: " + str(prueba_positiva.text)
+    if str(prueba_positiva) == '<Response [404]>':
+        print "---------------------------------------------------------"
+        print "INCORRECTO"
+    else:
+        print "---------------------------------------------------------"
+        print "CORRECTO"
+
+    print "---------------------------------------------------------"
+    print "Obtener votos: PRUEBA 10.2 (Token incorrecto)"
+    prueba_negativa1 = requests.get("http://localhost:5000/get/obtener_votos_votacion/DFKJGE54368/1")
+    print "Resultado Esperado: <Response [401]>Token incorrecto."
+    print "Resultado Obtenido: " + str(prueba_negativa1) + str(prueba_negativa1.text)
+    if str(prueba_negativa1) + str(prueba_negativa1.text) == "<Response [401]>Token incorrecto.":
+        print "---------------------------------------------------------"
+        print "CORRECTO"
+    else:
+        print "---------------------------------------------------------"
+        print "INCORRECTO"
+
+    print "---------------------------------------------------------"
+    print "Obtener votos: PRUEBA 10.3 (Array Vacío)"
+    prueba_negativa2 = requests.get("http://localhost:5000/get/obtener_votos_votacion/QWERTY12345/78")
+    print "Resultado Esperado: Array vacío"
+    print "Resultado Obtenido: " + str(prueba_negativa2) + str(prueba_negativa2.text)
+    if str(prueba_negativa2.text) == '[]':
+        print "---------------------------------------------------------"
+        print "CORRECTO"
+    else:
+        print "---------------------------------------------------------"
+        print "INCORRECTO"
+
+    print "---------------------------------------------------------"
+
 
     print "========================================================="
     print "PRUEBA 7: Almacenar votos (Funcional)"
@@ -322,6 +363,35 @@ if __name__ == '__main__':
     print "-------------------------------------------------------------"
     print "Consultar voto pregunta: PRUEBA 8.2 (Respuesta vacía)"
     prueba_negativa = consultar_votos_pregunta(db, "123", "1")  # Error, no existe el token
+    print "Resultado Esperado: Array Vacío"
+    print "Resultado Obtenido" + str(prueba_negativa)
+    if str(prueba_negativa) == '[]':
+        print "---------------------------------------------------------"
+        print "CORRECTO"
+    else:
+        print "---------------------------------------------------------"
+        print "INCORRECTO"
+
+    print "---------------------------------------------------------"
+
+    print "========================================================="
+    print "PRUEBA 11: Consultar voto votacion (Unitaria)"
+    print "========================================================="
+
+    print "Consultar voto votacion: PRUEBA 11.1 (Llamada correcta)"
+    prueba_positiva = consultar_votos_votacion(db, "1")  # Prueba positiva
+    print "Resultado Esperado: Array con los datos de los votos realizados con votacion de token=1"
+    print "Resultado Obtenido: " + str(prueba_positiva)
+    if str(prueba_positiva) == '<Response [404]>':
+        print "---------------------------------------------------------"
+        print "INCORRECTO"
+    else:
+        print "-------------------------------------------------------------"
+        print "CORRECTO"
+
+    print "-------------------------------------------------------------"
+    print "Consultar voto votacion: PRUEBA 11.2 (Respuesta vacía)"
+    prueba_negativa = consultar_votos_votacion(db, "123")  # Error, no existe el token
     print "Resultado Esperado: Array Vacío"
     print "Resultado Obtenido" + str(prueba_negativa)
     if str(prueba_negativa) == '[]':
