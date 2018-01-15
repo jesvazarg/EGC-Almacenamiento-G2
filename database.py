@@ -127,3 +127,21 @@ def guardar_voto(db, token_usuario, token_votacion, token_pregunta, token_respue
     cursor.execute(add_vote, data_vote1)
 
     db.commit()
+
+def consultar_votos_votacion(db, token_votacion):
+    cursor = db.cursor()
+    result = []
+
+    cursor.execute("SELECT * FROM votos WHERE token_votacion=%(token_votacion)s",
+                   {'token_votacion': token_votacion})
+
+    for row in cursor.fetchall():
+        result.append({
+            "id": row[0],
+            "token_usuario": row[1],
+            "token_votacion": row[2],
+            "token_pregunta": row[3],
+            "token_respuesta": row[4],
+        })
+
+    return result
