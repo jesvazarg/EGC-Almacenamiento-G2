@@ -95,7 +95,7 @@ def obtener_votos(token_bd, token_votacion, token_pregunta):
     return votes
 
 @app.route('/get/obtener_votos_votacion/<token_bd>/<token_votacion>', methods=['GET'])
-def obtener_votos(token_bd, token_votacion):
+def obtener_votos_votacion(token_bd, token_votacion):
     db = conectar_db()
 
     if not comprobar_token(db, token_bd):
